@@ -108,3 +108,9 @@ venv.bak/
 
 # mac dstore
 *.DS_Store
+
+# dataset
+*.zip
+
+# pip and env
+/ts1/*
