@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# photos
+*.jpg
+
+# mac dstore
+*.DS_Store
