@@ -2,8 +2,8 @@ import tensorflow as tf
 import pandas as pd
 import numpy as np
 import datetime as dt
-# import seaborn as sns
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+
 from tqdm import tqdm
 import os
 import sys
@@ -13,18 +13,19 @@ import cv2
 import shutil
 import img_proc as im
 
-# Preprocessing
 import keras
-from sklearn.model_selection import train_test_split
-from keras.preprocessing.image import ImageDataGenerator
 
-# CNN
+from sklearn.model_selection import train_test_split
+from keras.preprocessing import image
+from keras.preprocessing.image import ImageDataGenerator
 from keras.applications import inception_v3
 from keras.applications.inception_v3 import InceptionV3
 from keras.applications.inception_v3 import preprocess_input as inception_v3_preprocessor
 from keras.layers import Dropout, GlobalAveragePooling2D
 from keras.layers import Dense
 from keras.models import Model
+from keras.callbacks import ModelCheckpoint
+
 
 
 
@@ -111,6 +112,9 @@ def deleteSavedNet(best_weights_filepath):
 	else:
 		print("deleteSavedNet():No file to remove")
 
+# TODO: Save best keras model and delete the last.
+def saveWeights():
+	print('Save weights of the best neural network')
 
 if __name__ == '__main__':
 
@@ -157,11 +161,55 @@ if __name__ == '__main__':
 		shuffle=True,
 		class_mode="categorical")
 
-	deleteSavedNet(working_path + strModelFileName)
+	deleteSavedNet(strModelFileName) 
 	model = createModelInceptionV3()
-	print(model)
-	# TODO: Save best keras model and delete the last.
+	checkpoint = ModelCheckpoint(strModelFileName, 
+		monitor='val_acc',
+		verbose=1,
+		save_best_only=True,
+		mode='auto',
+		save_weights_only=False)
+	callbacks_list = [ checkpoint ]
+
 	# TODO: Train the NN on the data from Data folder.
-	# TODO: Test the NN and tune params try to reach 90%
-	# TODO: Convert model to android form.
+
+		# Calculate sizes of training and validation sets
+	STEP_SIZE_TRAIN = train_gen.n // train_gen.batch_size
+	STEP_SIZE_VALID = val_gen.n // val_gen.batch_size
+	
+	bDoTraining = True 
+
+	if bDoTraining == True:
+		# model.fit_generator does the actual training
+		history = model.fit_generator(generator=train_gen,
+			steps_per_epoch=STEP_SIZE_TRAIN,
+			validation_data=val_gen,
+			validation_steps=STEP_SIZE_VALID,
+			epochs=EPOCHS,
+			callbacks=callbacks_list)
+
+		# --- After fitting, load the best model
+		model.load_weights(strModelFileName)
+
+
+		# summarize history for accuracy
+		plt.plot(history.history['acc'])
+		plt.plot(history.history['val_acc'])
+		plt.title('model accuracy')
+		plt.ylabel('accuracy')
+		plt.xlabel('epoch')
+		plt.legend(['acc', 'val_acc'], loc='upper left')
+		plt.show()
+				
+		# summarize history for loss
+		plt.plot(history.history['loss'])
+		plt.plot(history.history['val_loss'])
+		plt.title('model loss')
+		plt.ylabel('loss')
+		plt.xlabel('epoch')
+		plt.legend(['loss', 'val_loss'], loc='upper left')
+		plt.show()
+			
+		# TODO: Test the NN and tune params try to reach 90%
+		# TODO: Convert model to android form.
 

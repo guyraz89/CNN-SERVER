@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import image
+from keras.preprocessing import image
 
 IMAGE_SIZE = 256
 
