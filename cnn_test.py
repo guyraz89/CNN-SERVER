@@ -11,21 +11,19 @@ import tensorflow as tf
 from keras.preprocessing import image
 
 IMAGE_SIZE = 256
+
 working_path = os.path.join(os.getcwd(), 'Data/')
 strModelFileName = os.path.join(working_path, 'Models/InceptionV3_Sgd.h5')
-
-
 labels = pd.read_csv(working_path + 'labels.csv')
 breeds = np.unique(labels['breed'])
+
 map_characters = {}
 for i in range(len(breeds)):
-  map_characters[i] = breeds[i]
-  print("<item>" + breeds[i] + "</item>")
-  
-
+  map_characters[i] = breeds[i].replace('_', ' ')
+    
 
 model = load_model(strModelFileName)
-img_path = working_path + 'test/beagle.jpg'
+img_path = working_path + 'test/border_collie_2.jpg'
 img = image.load_img(img_path) #basset.jpg")
 img_1 = image.img_to_array(img)
 img_1 = cv2.resize(img_1, 
@@ -35,7 +33,6 @@ img_1 = np.expand_dims(img_1, axis=0) / 255.
 
 y_pred = model.predict(img_1)
 Y_pred_classes = np.argmax(y_pred,axis = 1) 
-#print(y_pred)
 
 fig, ax = plt.subplots()
 ax.imshow(img) 
