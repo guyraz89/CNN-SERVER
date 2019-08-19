@@ -111,6 +111,8 @@ venv.bak/
 
 # dataset
 *.zip
+/Data/*
 
 # pip and env
 /ts1/*
+
