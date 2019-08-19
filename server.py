@@ -24,6 +24,11 @@ def js_static(filename):
     return send_from_directory(app.root_path + '/static/js/', filename)
 
 
+@app.route('/css/<path:filename>')
+def css_static(filename):
+    return send_from_directory(app.root_path + '/static/css/', filename)
+
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':

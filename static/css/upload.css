@@ -1,0 +1,16 @@
+img {
+    border: 2px solid black;   
+    align-items: center
+}
+
+#container {
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    vertical-align: middle;
+}​  
+
+#spinner {
+    position: relative;
+    visibility: hidden;
+}
