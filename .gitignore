@@ -105,6 +105,7 @@ venv.bak/
 
 # photos
 *.jpg
+*.jpeg
 
 # mac dstore
 *.DS_Store
