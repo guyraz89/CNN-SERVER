@@ -28,6 +28,10 @@ def js_static(filename):
 def css_static(filename):
     return send_from_directory(app.root_path + '/static/css/', filename)
 
+@app.route('/images/<path:filename>')
+def images_static(filename):
+    return send_from_directory(app.root_path + '/static/images/', filename)
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
