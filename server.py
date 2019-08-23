@@ -13,10 +13,14 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
            
-           
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(app.root_path + '/static/images', 'favicon.ico')
+         
+         
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('client.html')
+    return render_template('index.html')
 
 
 @app.route('/js/<path:filename>')
@@ -31,6 +35,10 @@ def css_static(filename):
 @app.route('/images/<path:filename>')
 def images_static(filename):
     return send_from_directory(app.root_path + '/static/images/', filename)
+
+@app.route('/<string:page_name>/')
+def render_static(page_name):
+    return render_template(app.root_path + '/static/pages/%s.html' % page_name)
 
 
 @app.route('/upload', methods=['POST'])
