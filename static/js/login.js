@@ -20,7 +20,7 @@ function register() {
      console.log(userPassword);
      
     //Create User with Email and Password
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+    firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -29,15 +29,16 @@ function register() {
     });
 }
 
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    var userIdToken;
-    user.getToken().then(function(idToken) {
-      userIdToken = idToken;
-    });
-    success(userIdToken);
-  }
-});
+// firebase.auth().onAuthStateChanged(function(user) {
+//   console.log(user)
+//   if (user) {
+//     var userIdToken;
+//     user.getToken().then(function(idToken) {
+//       userIdToken = idToken;
+//     });
+//     success(userIdToken);
+//   }
+// });
 
 
 function login(){
@@ -56,6 +57,7 @@ function login(){
         window.alert("Error: " + errorCode + " " +errorMessage);
         return;
     });
+    window.location.href = "/index"
 }
 
 function logout(){
@@ -86,6 +88,20 @@ function success(userIdToken) {
     headers: {
       'Authorization': userIdToken 
     },
+    success: function(response){
+      console.log(response)
+      return response;
+    },
+    error: function(error){
+      console.log(error);
+    }
+  });
+}
+
+function success2() {
+  $.ajax({
+    type: 'GET',
+    url: '/index',
     success: function(response){
       console.log(response)
       return response;
