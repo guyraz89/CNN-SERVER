@@ -24,4 +24,18 @@ $(function() {
         });
     });
 
+    $("#forum_link").click(() => {
+        $.ajax({
+            type: 'GET',
+			url: '/forum',
+			success: function(response){
+              console.log(window.location);
+                 
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+    });
+
 });

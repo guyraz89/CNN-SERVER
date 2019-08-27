@@ -27,10 +27,6 @@ from keras.models import Model
 from keras.callbacks import ModelCheckpoint
 
 
-
-
-
-
 warnings.filterwarnings('ignore')
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 np.random.seed(7)
@@ -112,9 +108,6 @@ def deleteSavedNet(best_weights_filepath):
 	else:
 		print("deleteSavedNet():No file to remove")
 
-# TODO: Save best keras model and delete the last.
-def saveWeights():
-	print('Save weights of the best neural network')
 
 if __name__ == '__main__':
 
@@ -126,9 +119,9 @@ if __name__ == '__main__':
 	train_ids, valid_ids = train_test_split(labels, test_size = TESTING_SPLIT)
 	print(len(train_ids), 'train ids', len(valid_ids), 'validation ids')
 	print('Total', len(labels), 'testing images')
-#	# Set all dog images into train valid and test folders (known input for keras)
-#	copyFileSet(working_path + "all_images/", working_path + "train/", train_ids)
-#	copyFileSet(working_path + "all_images/",  working_path + "valid/", valid_ids)
+	# Set all dog images into train valid and test folders (known input for keras)
+	copyFileSet(working_path + "all_images/", working_path + "train/", train_ids)
+	copyFileSet(working_path + "all_images/",  working_path + "valid/", valid_ids)
 	
 	train_datagen = ImageDataGenerator(
 		preprocessing_function=im.preprocess,
@@ -210,6 +203,5 @@ if __name__ == '__main__':
 		plt.legend(['loss', 'val_loss'], loc='upper left')
 		plt.show()
 			
-		# TODO: Test the NN and tune params try to reach 90%
 		# TODO: Convert model to android form.
 

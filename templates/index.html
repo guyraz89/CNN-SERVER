@@ -30,13 +30,13 @@
         Menu
         <i class="fas fa-bars"></i>
       </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
+      <div id="forum_link" class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item mx-0 mx-lg-1">
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Classify</a>
           </li>
           <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Contacts</a>
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/forum">Forum</a>
           </li>
           <li class="nav-item mx-0 mx-lg-1">
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Login</a>
@@ -87,7 +87,7 @@
         <div class="divider-custom-line"></div>
       </div>
       <center>
-
+        
         <div class="col-md-6 col-lg-4">
           <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -95,7 +95,7 @@
                 <i class="fas fa-plus fa-3x"></i>
               </div>
             </div>
-            <img id="image_view" class="img-fluid" src="{{url_for('images_static', filename='dog.png')}}"" alt="">
+            <img id="image_view" class="img-fluid" src="{{url_for('images_static', filename='dog.png')}}"" alt="" style="width: 256px; height: 256px;">
           </div>
         </div>
 
@@ -118,28 +118,7 @@
   </center>
   </section>
 
-        
-
-  <!-- About Section -->
-  <section class="page-section bg-primary text-white mb-0" id="about">
-    <div class="container">
-
-      <!-- About Section Heading -->
-      <h2 class="page-section-heading text-center text-uppercase text-white">Contacts</h2>
-
-      <!-- Icon Divider -->
-      <div class="divider-custom divider-light">
-        <div class="divider-custom-line"></div>
-        <div class="divider-custom-icon">
-          <i class="fas fa-star"></i>
-        </div>
-        <div class="divider-custom-line"></div>
-      </div>
-
-
-
-    </div>
-  </section>
+      
 
   <!-- Footer -->
   <footer class="footer text-center">

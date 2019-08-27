@@ -1,6 +1,8 @@
-from flask import Flask, request, render_template, jsonify, send_from_directory
+from flask import Flask, request, render_template, url_for, send_from_directory, redirect
 from werkzeug.utils import secure_filename
 import os
+import csv
+import json
 import cnn_test as cnn
 
 app = Flask(__name__)
@@ -8,6 +10,21 @@ UPLOAD_FOLDER = 'uploads/'
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+def getBreeds():
+    try:
+        breeds=[]         #an empty list to store the second column
+        with open('Data/labels.csv', 'r') as rf:
+            reader = csv.reader(rf, delimiter=',')
+            for row in reader:
+                breeds.append(row[1])
+    except FileNotFoundError as err:
+        print(err)
+    
+    breed_set = list(set(breeds))
+    for i in range(len(breed_set)):
+        breed_set[i] = breed_set[i].replace('_', ' ')
+        
+    return breed_set
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -20,7 +37,11 @@ def favicon():
          
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('index.html')
+    return render_template('login.html')
+
+@app.route('/forum', methods=['GET', 'POST'])
+def render_forum():
+    return render_template('forum.html')
 
 
 @app.route('/js/<path:filename>')
@@ -36,9 +57,11 @@ def css_static(filename):
 def images_static(filename):
     return send_from_directory(app.root_path + '/static/images/', filename)
 
-@app.route('/<string:page_name>/')
-def render_static(page_name):
-    return render_template(app.root_path + '/static/pages/%s.html' % page_name)
+
+@app.route('/breeds', methods=['POST'])
+def serv_breeds():
+    if request.method == 'POST':
+        return json.dumps(getBreeds())
 
 
 @app.route('/upload', methods=['POST'])
@@ -51,7 +74,7 @@ def upload_file():
             pred = cnn.predict(file.filename)
             print(pred)
             return pred
-        print('not alowd')
+        print('not alowed')
     print('opppsss')
     
 if __name__ == '__main__':
