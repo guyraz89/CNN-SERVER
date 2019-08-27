@@ -27,8 +27,7 @@ function register(){
         console.log("Error: "+errorCode +" "+errorMessage);
         window.alert("Error: "+errorCode +" "+errorMessage);
     });
-    window.alert("user are registerd");
-    window.location.href="./index.html";
+    success();
 }
 
 function login(){
@@ -44,11 +43,10 @@ function login(){
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-
         window.alert("Error: " + errorCode + " " +errorMessage);
+        return;
     });
-    window.alert("user are signed in");
-    window.location.href="./index.html";
+    success();
 }
 
 function logout(){
@@ -70,4 +68,17 @@ function logout(){
           window.alert('User Already Logged Out!');
         }
       });
+}
+
+function success() {
+  $.ajax({
+    type: 'GET',
+    url: 'localhost:5000/index',
+    success: function(response){
+
+    },
+    error: function(error){
+      console.log(error);
+    }
+  });
 }

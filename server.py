@@ -39,6 +39,12 @@ def favicon():
 def home():
     return render_template('login.html')
 
+
+@app.route('/index', methods=['GET', 'POST'])
+def render_index():
+    return render_template('index.html')
+
+
 @app.route('/forum', methods=['GET', 'POST'])
 def render_forum():
     return render_template('forum.html')
