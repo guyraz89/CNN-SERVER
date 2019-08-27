@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 import os
 import csv
 import json
+import google.oauth2.id_token
 import cnn_test as cnn
 
 app = Flask(__name__)
@@ -42,7 +43,14 @@ def home():
 
 @app.route('/index', methods=['GET', 'POST'])
 def render_index():
-    return render_template('index.html')
+    if request.method == 'POST':
+        id_token = request.headers['Authorization'].split(' ').pop()
+        claims = google.oauth2.id_token.verify_firebase_token(id_token, HTTP_REQUEST)
+        if not claims:
+            return 'Unauthorized', 401
+        return render_template('index.html')
+    else:
+        return render_template('index.html')
 
 
 @app.route('/forum', methods=['GET', 'POST'])

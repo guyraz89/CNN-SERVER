@@ -10,15 +10,15 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig); // Was missing
 
-function register(){
+function register() {
     if (!firebase.apps.length) {
         firebase.initializeApp({});
      }
-    console.log(firebase.auth);
     var userEmail = document.getElementById("email_field").value;
     var userPassword = document.getElementById("password_field").value;
-    window.alert(userEmail+" "+userPassword);
-
+     console.log(userEmail);
+     console.log(userPassword);
+     
     //Create User with Email and Password
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
         // Handle Errors here.
@@ -27,8 +27,18 @@ function register(){
         console.log("Error: "+errorCode +" "+errorMessage);
         window.alert("Error: "+errorCode +" "+errorMessage);
     });
-    success();
 }
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    var userIdToken;
+    user.getToken().then(function(idToken) {
+      userIdToken = idToken;
+    });
+    success(userIdToken);
+  }
+});
+
 
 function login(){
     if (!firebase.apps.length) {
@@ -46,7 +56,6 @@ function login(){
         window.alert("Error: " + errorCode + " " +errorMessage);
         return;
     });
-    success();
 }
 
 function logout(){
@@ -70,12 +79,16 @@ function logout(){
       });
 }
 
-function success() {
+function success(userIdToken) {
   $.ajax({
-    type: 'GET',
-    url: 'localhost:5000/index',
+    type: 'POST',
+    url: '/index',
+    headers: {
+      'Authorization': userIdToken 
+    },
     success: function(response){
-
+      console.log(response)
+      return response;
     },
     error: function(error){
       console.log(error);

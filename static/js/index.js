@@ -18,7 +18,11 @@ $(function() {
             datatype: false,
             processData: false
         }).done(function(response) {
-            $('#predicted').text(response);
+            $("#image_view").css({
+                "border-color": "#8A2BE2", 
+                "border-width":"2px", 
+                "border-style":"solid"});
+            $('#result').text(response);
         }).fail(function(err){
             alert('error:' + err);
         });
@@ -30,7 +34,6 @@ $(function() {
 			url: '/forum',
 			success: function(response){
               console.log(window.location);
-                 
 			},
 			error: function(error){
 				console.log(error);
