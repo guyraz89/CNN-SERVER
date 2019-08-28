@@ -4,13 +4,12 @@ $(function() {
         console.log();
         let pic = $('#input_pic')[0].files[0]; 
         $("#image_view").attr("src", URL.createObjectURL(pic));
-        $("#predicted").text('');
+        $("#result").text('?');
+        $("#image_view").css({"border-width":"0px"});
     });
 
     $('#upload-file-btn').click(() => {
-
         var form_data = new FormData($('#upload-file')[0]);
-        $('#upload-file-btn').attr('disabled', true);
         $('image_view').attr('src', $('#upload-file')[0])
         $.ajax({
             type: 'POST',
@@ -25,23 +24,8 @@ $(function() {
                 "border-width":"2px", 
                 "border-style":"solid"});
             $('#result').text(response);
-            $('#upload-file-btn').attr('disabled', false);
         }).fail(function(err){
             alert('error:' + err);
         });
     });
-
-    $("#forum_link").click(() => {
-        $.ajax({
-            type: 'GET',
-			url: '/forum',
-			success: function(response){
-              console.log(window.location);
-			},
-			error: function(error){
-				console.log(error);
-			}
-		});
-    });
-
 });
