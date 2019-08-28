@@ -8,7 +8,9 @@ $(function() {
     });
 
     $('#upload-file-btn').click(() => {
+
         var form_data = new FormData($('#upload-file')[0]);
+        $('#upload-file-btn').attr('disabled', true);
         $('image_view').attr('src', $('#upload-file')[0])
         $.ajax({
             type: 'POST',
@@ -23,6 +25,7 @@ $(function() {
                 "border-width":"2px", 
                 "border-style":"solid"});
             $('#result').text(response);
+            $('#upload-file-btn').attr('disabled', false);
         }).fail(function(err){
             alert('error:' + err);
         });

@@ -18,5 +18,5 @@ function loadCards() {
             console.log(err);
         }
     });
-    return dogs;
+    return breeds;
 }
