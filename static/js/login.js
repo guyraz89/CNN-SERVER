@@ -26,20 +26,16 @@ function register() {
         var errorMessage = error.message;
         console.log("Error: "+errorCode +" "+errorMessage);
         window.alert("Error: "+errorCode +" "+errorMessage);
+        return;
+    }).then(function() {
+      firebase.auth().onAuthStateChanged(function(user) {
+        console.log(user)
+        if (user) {
+          window.location.href = "/index"
+        }
+      });
     });
 }
-
-// firebase.auth().onAuthStateChanged(function(user) {
-//   console.log(user)
-//   if (user) {
-//     var userIdToken;
-//     user.getToken().then(function(idToken) {
-//       userIdToken = idToken;
-//     });
-//     success(userIdToken);
-//   }
-// });
-
 
 function login(){
     if (!firebase.apps.length) {
@@ -56,29 +52,19 @@ function login(){
         var errorMessage = error.message;
         window.alert("Error: " + errorCode + " " +errorMessage);
         return;
-    });
-    window.location.href = "/index"
-}
-
-function logout(){
-    firebase.auth().onAuthStateChanged(function(user) {
+    }).then(function() {
+      firebase.auth().onAuthStateChanged(function(user) {
+        console.log(user)
         if (user) {
-          // User is signed in.
-          firebase.auth().signOut().then(function() {
-            // Sign-out successful.
-            window.alert('User Logged Out!');
-          }).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-
-            window.alert("Error: "+errorCode +" "+errorMessage);
-          });
-        } else {
-          // User is signed out.
-          window.alert('User Already Logged Out!');
+          window.location.href = "/index"
         }
       });
+      // var user = firebase.auth().currentUser
+      // console.log(user)
+      
+    });
+    
+    
 }
 
 function success(userIdToken) {

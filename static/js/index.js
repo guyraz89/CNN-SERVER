@@ -1,4 +1,15 @@
 $(function() {
+    const firebaseConfig = {
+        apiKey: "AIzaSyD06U44xlA6MvwM898APHhA7f1MK8zlKRQ",
+        authDomain: "dogbreedclassifier-finalproj.firebaseapp.com",
+        databaseURL: "https://dogbreedclassifier-finalproj.firebaseio.com",
+        projectId: "dogbreedclassifier-finalproj",
+        storageBucket: "",
+        messagingSenderId: "855533767649",
+        appId: "1:855533767649:web:ec47083ffed253e6"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
 
     $('#input_pic').on('change', () => {
         console.log();
@@ -27,5 +38,28 @@ $(function() {
         }).fail(function(err){
             alert('error:' + err);
         });
+    });
+
+    $("#logout_link").click(() => {
+        console.log("logout")
+        console.log(firebase.auth)
+        var user = firebase.auth().currentUser
+        console.log(user)
+        if (user) {
+            // User is signed in.
+            firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+            window.alert('User Logged Out!');
+            window.location.href = "/"
+            }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+
+            window.alert("Error: "+errorCode +" "+errorMessage);
+            });
+        } else{
+            window.alert("user already logged out !!!!");
+        }
     });
 });
