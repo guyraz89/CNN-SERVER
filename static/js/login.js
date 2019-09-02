@@ -16,9 +16,6 @@ function register() {
      }
     var userEmail = document.getElementById("email_field").value;
     var userPassword = document.getElementById("password_field").value;
-     console.log(userEmail);
-     console.log(userPassword);
-     
     //Create User with Email and Password
     firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
         // Handle Errors here.
@@ -26,12 +23,15 @@ function register() {
         var errorMessage = error.message;
         console.log("Error: "+errorCode +" "+errorMessage);
         window.alert("Error: "+errorCode +" "+errorMessage);
-        return;
     }).then(function() {
       firebase.auth().onAuthStateChanged(function(user) {
         console.log(user)
         if (user) {
-          window.location.href = "/index"
+          firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
+            success(idToken);
+          }).catch(function(error) {
+            console.log(error);
+          });
         }
       });
     });
@@ -51,20 +51,17 @@ function login(){
         var errorCode = error.code;
         var errorMessage = error.message;
         window.alert("Error: " + errorCode + " " +errorMessage);
-        return;
     }).then(function() {
       firebase.auth().onAuthStateChanged(function(user) {
-        console.log(user)
         if (user) {
-          window.location.href = "/index"
+          firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
+            success(idToken);
+          }).catch(function(error) {
+            console.log(error);
+          });
         }
       });
-      // var user = firebase.auth().currentUser
-      // console.log(user)
-      
-    });
-    
-    
+    });  
 }
 
 function success(userIdToken) {
@@ -74,23 +71,8 @@ function success(userIdToken) {
     headers: {
       'Authorization': userIdToken 
     },
-    success: function(response){
-      console.log(response)
-      return response;
-    },
-    error: function(error){
-      console.log(error);
-    }
-  });
-}
-
-function success2() {
-  $.ajax({
-    type: 'GET',
-    url: '/index',
-    success: function(response){
-      console.log(response)
-      return response;
+    success: function(response) {
+        window.location.href = '/index'
     },
     error: function(error){
       console.log(error);

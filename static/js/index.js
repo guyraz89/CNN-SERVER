@@ -41,7 +41,6 @@ $(function() {
     });
 
     $("#logout_link").click(() => {
-        console.log("logout")
         console.log(firebase.auth)
         var user = firebase.auth().currentUser
         console.log(user)

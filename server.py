@@ -1,14 +1,18 @@
-from flask import Flask, request, render_template, url_for, send_from_directory, redirect
+from flask import Flask, request, render_template, url_for, send_from_directory, redirect, session
 from werkzeug.utils import secure_filename
 import os
 import csv
 import json
-import google.oauth2.id_token
 import cnn_test as cnn
+from google.oauth2 import id_token
+from google.auth.transport import requests
+
 
 app = Flask(__name__)
+app.secret_key = 'DogSecretDog'
 UPLOAD_FOLDER = 'uploads/'
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg'])
+HTTP_REQUEST = requests.Request()
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def getBreeds():
@@ -30,7 +34,12 @@ def getBreeds():
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-           
+
+
+def index_verified():
+    return render_template('index.html')
+
+        
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(app.root_path + '/static/images', 'favicon.ico')
@@ -44,14 +53,26 @@ def home():
 @app.route('/index', methods=['GET', 'POST'])
 def render_index():
     if request.method == 'POST':
-        id_token = request.headers['Authorization'].split(' ').pop()
-        claims = google.oauth2.id_token.verify_firebase_token(id_token, HTTP_REQUEST)
+        idToken = request.headers['Authorization'].split(' ')[0]
+        claims = id_token.verify_firebase_token(idToken, HTTP_REQUEST)
         if not claims:
-            return 'Unauthorized', 401
-        return render_template('index.html')
+            return redirect('logout')
+        session['Logged'] = True
+        return redirect('index_verified')
     else:
-        return render_template('index.html')
+        print('Logged in : ', session['Logged'])
+        if session['Logged'] == True:
+            return render_template('index.html')
+        
+        return redirect('logout')
 
+
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    session['Logged'] = False
+    #session.pop('Logged', None)
+    return redirect('home')
 
 @app.route('/forum', methods=['GET', 'POST'])
 def render_forum():
@@ -88,8 +109,7 @@ def upload_file():
             pred = cnn.predict(file.filename)
             print(pred)
             return pred
-        print('not alowed')
-    print('opppsss')
+        print('File should be jpg or jpeg')
     
 if __name__ == '__main__':
     app.run(debug=True)
