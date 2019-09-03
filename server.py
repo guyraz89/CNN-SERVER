@@ -58,7 +58,7 @@ def render_index():
         if not claims:
             return redirect('logout')
         session['Logged'] = True
-        return redirect('index_verified')
+        return 'Logged' # TODO: redirect 404 page.
     else:
         print('Logged in : ', session['Logged'])
         if session['Logged'] == True:
@@ -70,9 +70,8 @@ def render_index():
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    session['Logged'] = False
-    #session.pop('Logged', None)
-    return redirect('home')
+    session.pop('Logged', None)
+    return redirect('/')
 
 @app.route('/forum', methods=['GET', 'POST'])
 def render_forum():
