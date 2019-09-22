@@ -89,9 +89,7 @@ def createModelInceptionV3():
 	for layer in base_model.layers:
 		layer.trainable = False
 
-#  model.compile(optimizer='adam', 
-#    loss='categorical_crossentropy', 
-#    metrics=['accuracy']) 
+
 	model.compile(optimizer='sgd', 
 		loss='categorical_crossentropy', 
 		metrics=['accuracy'])
@@ -164,9 +162,8 @@ if __name__ == '__main__':
 		save_weights_only=False)
 	callbacks_list = [ checkpoint ]
 
-	# TODO: Train the NN on the data from Data folder.
 
-		# Calculate sizes of training and validation sets
+	# Calculate sizes of training and validation sets
 	STEP_SIZE_TRAIN = train_gen.n // train_gen.batch_size
 	STEP_SIZE_VALID = val_gen.n // val_gen.batch_size
 	

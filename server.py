@@ -31,6 +31,7 @@ def getBreeds():
         
     return breed_set
 
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -58,7 +59,7 @@ def render_index():
         if not claims:
             return redirect('logout')
         session['Logged'] = True
-        return 'Logged' # TODO: redirect 404 page.
+        return 'Logged'
     else:
         print('Logged in : ', session['Logged'])
         if session['Logged'] == True:
@@ -67,11 +68,11 @@ def render_index():
         return redirect('logout')
 
 
-
 @app.route('/logout', methods=['GET'])
 def logout():
     session.pop('Logged', None)
     return redirect('/')
+
 
 @app.route('/forum', methods=['GET', 'POST'])
 def render_forum():
