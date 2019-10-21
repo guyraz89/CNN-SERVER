@@ -48,6 +48,7 @@ def favicon():
          
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    session['Logged'] = False
     return render_template('login.html')
 
 
