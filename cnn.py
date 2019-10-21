@@ -24,7 +24,9 @@ from keras.applications.inception_v3 import preprocess_input as inception_v3_pre
 from keras.layers import Dropout, GlobalAveragePooling2D
 from keras.layers import Dense
 from keras.models import Model
+from keras.models import load_model
 from keras.callbacks import ModelCheckpoint
+from keras import backend as K
 
 
 warnings.filterwarnings('ignore')
@@ -67,15 +69,11 @@ def copyFileSet(strDirFrom, strDirTo, arrFileNames):
 		shutil.copy(strFileNameFrom, strFileNameTo)
 
 def createModelInceptionV3():
-#  model.layers[0].trainable = False
-#  model.compile(optimizer='sgd', 
-#    loss='categorical_crossentropy', 
-#    metrics=['accuracy']) 
 
 	base_model = InceptionV3(weights = 'imagenet', 
 		include_top = False, 
 		input_shape=(IMAGE_SIZE, IMAGE_SIZE, 3))
-			
+		
 	x = base_model.output
 	x = GlobalAveragePooling2D()(x)
 
@@ -107,6 +105,55 @@ def deleteSavedNet(best_weights_filepath):
 		print("deleteSavedNet():No file to remove")
 
 
+def print_graph_nodes(filename):
+	g = tf.GraphDef()
+	g.ParseFromString(open(filename, 'rb').read())
+	print()
+	print(filename)
+	print("=======================INPUT===================")
+	print([n for n in g.node if n.name.find('input') != -1])
+	print("=======================OUTPUT==================")
+	print([n for n in g.node if n.name.find('output') != -1])
+	print("===================KERAS_LEARNING==============")
+	print([n for n in g.node if n.name.find('keras_learning_phase') != -1])
+	print("===============================================")
+	print()
+ 
+def keras_to_tensorflow(keras_model, output_dir, 
+	model_name,out_prefix="output_", 
+		log_tensorboard=True):
+
+	if os.path.exists(output_dir) == False:
+		os.mkdir(output_dir)
+
+	out_nodes = []
+
+	for i in range(len(keras_model.outputs)):
+		out_nodes.append(out_prefix + str(i + 1))
+		tf.identity(keras_model.output[i], 
+			out_prefix + str(i + 1))
+
+	sess = K.get_session()
+
+	from tensorflow.python.framework import graph_util
+	from tensorflow.python.framework import graph_io
+
+	init_graph = sess.graph.as_graph_def()
+
+	main_graph = graph_util.convert_variables_to_constants(
+			sess, init_graph, out_nodes)
+
+	graph_io.write_graph(main_graph, output_dir, 
+		name=model_name, as_text=False)
+
+	if log_tensorboard:
+		from tensorflow.python.tools import import_pb_to_tensorboard
+   
+		import_pb_to_tensorboard.import_to_tensorboard(
+			os.path.join(output_dir, model_name),
+			output_dir)
+  
+  
 if __name__ == '__main__':
 
 	# Load labels from csv file.
@@ -199,6 +246,5 @@ if __name__ == '__main__':
 		plt.xlabel('epoch')
 		plt.legend(['loss', 'val_loss'], loc='upper left')
 		plt.show()
-			
-		# TODO: Convert model to android form.
 
+			

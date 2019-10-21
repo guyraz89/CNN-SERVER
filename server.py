@@ -70,13 +70,16 @@ def render_index():
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    session.pop('Logged', None)
+    session['Logged'] = False
     return redirect('/')
 
 
-@app.route('/forum', methods=['GET', 'POST'])
+@app.route('/forum', methods=['GET'])
 def render_forum():
-    return render_template('forum.html')
+    if session['Logged'] == True:
+        return render_template('forum.html')
+    else:
+        return redirect('logout')
 
 
 @app.route('/js/<path:filename>')
