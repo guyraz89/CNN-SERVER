@@ -97,7 +97,7 @@
                   <i class="fas fa-plus fa-3x"></i>
                 </div>
               </div>
-              <img id="image_view" class="img-fluid" src="{{url_for('images_static', filename='dog.png')}}"" alt="" style="width: 256px; height: 256px;">
+              <img id="image_view" class="img-fluid" src="{{url_for('images_static', filename='dog.png')}}" alt="" style="width: 256px; height: 256px;">
             </div>
           </div>
   
@@ -105,7 +105,7 @@
           <div class="col-md-6 col-lg-4">
               <form id="upload-file" method="post" enctype="multipart/form-data">
                 <div class="custom-file">
-                    <input id="input_pic" type="file" class="custom-file-input" name="file">
+                    <input id="input_pic" type="file" class="custom-file-input" name="file" data-type="Image">
                     <label class="custom-file-label" for="file" style="text-align: left;">Let me guess</label>
                 </div>
                 <fieldset>

@@ -46,6 +46,11 @@ def favicon():
     return send_from_directory(app.root_path + '/static/images', 'favicon.ico')
          
          
+@app.route('/logo')
+def getLogo():
+    return send_from_directory(app.root_path + '/static/images', 'dog.png')
+
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     session['Logged'] = False
