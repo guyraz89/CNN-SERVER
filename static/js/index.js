@@ -47,7 +47,7 @@ $(function() {
                     "border-color": "#8A2BE2", 
                     "border-width":"2px", 
                     "border-style":"solid"});
-                    
+                    $("#image_view").attr("src", '/logo');
                 $('#result').text(response);
             }).fail(function(err){
                 alert('error:' + err);
