@@ -56,14 +56,13 @@ def home():
     session['Logged'] = False
     return render_template('login.html')
 
+
 @app.route('/chat/<string:breed>', methods=['GET'])
 def server_chat(breed):
     if breed in getBreeds():
         return render_template('chat.html')
     else:
         return render_template('forum.html')
-
-
 
 
 @app.route('/index', methods=['GET', 'POST'])
@@ -128,6 +127,7 @@ def upload_file():
             print(pred)
             return pred
         print('File should be jpg or jpeg')
+    
     
 if __name__ == '__main__':
     app.run(debug=True)
