@@ -1,0 +1,63 @@
+$(function(){
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyD06U44xlA6MvwM898APHhA7f1MK8zlKRQ",
+        authDomain: "dogbreedclassifier-finalproj.firebaseapp.com",
+        databaseURL: "https://dogbreedclassifier-finalproj.firebaseio.com",
+        projectId: "dogbreedclassifier-finalproj",
+        storageBucket: "",
+        messagingSenderId: "855533767649",
+        appId: "1:855533767649:web:ec47083ffed253e6"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    
+    // // Returns the signed-in user's profile pic URL.
+    // function getProfilePicUrl() {
+    //     return firebase.auth().currentUser.photoURL || '/images/profile_placeholder.png';
+    // }
+    
+    //   // Returns the signed-in user's display name.
+    // function getUserName() {
+    //     return firebase.auth().currentUser.displayName;
+    // }
+    
+    var database = firebase.database();
+    function clickAdd(){
+        let timestamp = firebase.firestore.Timestamp.fromDate(new Date());
+        let body = $('form-control').val();
+        console.log(timestamp);
+        console.log(body);
+    }
+    
+    function writeNewMessage(dogBreed,uid, username, picture, title, body, timestamp) {
+        // A post entry.
+        var postData = {
+          author: username,
+          uid: uid,
+          body: body,
+          title: title,
+          starCount: 0,
+          authorPic: picture,
+          timestamp: timestamp
+        };
+        // Get a key for a new Post.
+      var newMessageKey = database.ref().child('dogBreed').child(dogBreed).child('messages').push().key;
+    
+      // Write the new post's data simultaneously in the posts list and the user's post list.
+      var updates = {};
+      updates['/dogBreed/'+dogBreed+'/messages/' + newPostKey] = postData;
+    
+      return database.ref().update(updates);
+    }
+    
+    function readMessages(dogBreed){
+        database.ref().child('dogBreed').child(dogBreed).on('value',
+            function(snapshot){
+                snapshot.forEach(function(childSnapshot){
+                    var childKey = childSnapshot.key;
+                    var childData = childSnapshot.val();
+                });
+            });
+    }
+});
