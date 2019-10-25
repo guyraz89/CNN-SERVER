@@ -56,6 +56,15 @@ def home():
     session['Logged'] = False
     return render_template('login.html')
 
+@app.route('/chat/<string:breed>', methods=['GET'])
+def server_chat(breed):
+    if breed in getBreeds():
+        return render_template('chat.html')
+    else:
+        return render_template('forum.html')
+
+
+
 
 @app.route('/index', methods=['GET', 'POST'])
 def render_index():
