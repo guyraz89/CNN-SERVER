@@ -96,7 +96,7 @@ img {
   order: 1;
   flex-grow: 2;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   padding: 25px;
 }
 
