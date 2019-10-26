@@ -37,6 +37,7 @@ $(function(){
         }
         console.log('dogbreed: '+dogbreed+'\nuid: '+uid+'\nname: '+name+'\nbody: '+body);
         writeNewMessage(dogbreed,uid,name,body);
+        localMessage("../static/images/avatar.png", "Hi my name is guy", "timestamp")// Working.. need to set image of user and timestamp
     });
 
     function writeNewMessage(dogBreed,uid, username, body) {
@@ -68,4 +69,11 @@ function readMessages(dogBreed){
         });
 }
 
+function localMessage(imgSrc, msg, timestamp) {
+    $('#chat_body').append('<div class="d-flex justify-content-start mb-4"> <div class="img_cont_msg"> <img src="' + imgSrc + '" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + msg + '<span class="msg_time">' + timestamp + '</span></div></div>');
+}
+
+function externalMessage(imgSrc, msg, timestamp) {
+    $('#chat_body').append('<div class="d-flex justify-content-end mb-4"> <div class="img_cont_msg"> <img src="' + imgSrc + '" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + msg + '<span class="msg_time">' + timestamp + '</span></div></div>');
+}
 
