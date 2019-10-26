@@ -64,7 +64,6 @@ def home():
 @app.route('/chat/<string:breed>', methods=['GET'])
 def server_chat(breed):
     breed = parse_breed(breed)
-    print(breed)
     if breed in getBreeds():
         return render_template('chat.html')
     else:
