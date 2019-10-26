@@ -1,68 +1,49 @@
-@import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
-
-.detailBox {
-    width:320px;
-    border:1px solid #bbb;
-    margin:50px;
-}
-.titleBox {
-    background-color:#fdfdfd;
-    padding:10px;
-}
-.titleBox label{
-  color:#444;
-  margin:0;
-  display:inline-block;
-}
-
-.commentBox {
-    padding:10px;
-    border-top:1px dotted #bbb;
-}
-.commentBox .form-group:first-child, .actionBox .form-group:first-child {
-    width:80%;
-}
-.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
-    width:18%;
-}
-.actionBox .form-group * {
-    width:100%;
-}
-.taskDescription {
-    margin-top:10px 0;
-}
-.commentList {
-    padding:0;
-    list-style:none;
-    max-height:200px;
-    overflow:auto;
-}
-.commentList li {
-    margin:0;
-    margin-top:10px;
-}
-.commentList li > div {
-    display:table-cell;
-}
-.commenterImage {
-    width:30px;
-    margin-right:5px;
-    height:100%;
-    float:left;
-}
-.commenterImage img {
-    width:100%;
-    border-radius:50%;
-}
-.commentText p {
-    margin:0;
-}
-.sub-text {
-    color:#aaa;
-    font-family:verdana;
-    font-size:11px;
-}
-.actionBox {
-    border-top:1px dotted #bbb;
-    padding:10px;
-}
+/* Chat containers */
+.container {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  /* Darker chat container */
+  .darker {
+    border-color: #ccc;
+    background-color: #ddd;
+  }
+  
+  /* Clear floats */
+  .container::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  /* Style images */
+  .container img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+  }
+  
+  /* Style the right image */
+  .container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+  }
+  
+  /* Style time text */
+  .time-right {
+    float: right;
+    color: #aaa;
+  }
+  
+  /* Style time text */
+  .time-left {
+    float: left;
+    color: #999;
+  }

@@ -11,16 +11,8 @@ $(function(){
     };
     
     firebase.initializeApp(fbg);
+    console.log(firebase.database());
     
-    // // Returns the signed-in user's profile pic URL.
-    // function getProfilePicUrl() {
-    //     return firebase.auth().currentUser.photoURL || '/images/profile_placeholder.png';
-    // }
-    
-    //   // Returns the signed-in user's display name.
-    // function getUserName() {
-    //     return firebase.auth().currentUser.displayName;
-    // }
     
     $('#add_btn').click(() => {
         console.log(firebase)
