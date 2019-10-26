@@ -1,6 +1,9 @@
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	crossorigin="anonymous">
+</script> 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="{{url_for('css_static', filename='chat.css')}}" crossorigin="anonymous">
 <!------ Include the above in your HEAD tag ---------->
 
@@ -13,6 +16,9 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
 	</head>
 	<!--Coded With Love By Mutiullah Samim-->
 	<body>
@@ -101,7 +107,7 @@
 							<div class="input-group">
 								<textarea id="chat_input" name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
 								<div class="input-group-append">
-									<span id="send_btn" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
+									<span id="add_btn" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
 								</div>
 							</div>
 						</div>
@@ -109,5 +115,6 @@
 				</div>
 			</div>
 		</div>
+		<script src="{{url_for('js_static', filename='chat.js')}}"> </script>
 	</body>
 </html>
