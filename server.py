@@ -15,6 +15,10 @@ ALLOWED_EXTENSIONS = set(['jpg', 'jpeg'])
 HTTP_REQUEST = requests.Request()
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+def parse_breed(breed):
+    return breed.replace('_', ' ')
+    
+
 def getBreeds():
     try:
         breeds=[]         #an empty list to store the second column
@@ -59,6 +63,8 @@ def home():
 
 @app.route('/chat/<string:breed>', methods=['GET'])
 def server_chat(breed):
+    breed = parse_breed(breed)
+    print(breed)
     if breed in getBreeds():
         return render_template('chat.html')
     else:

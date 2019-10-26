@@ -10,9 +10,10 @@ function loadCards() {
         url: '/breeds',
         success: function(response) {
             breeds = JSON.parse(response).sort();
+            console.log(breeds)
             for (let i = 0; i < breeds.length; i++) {
                 //$('.row').append('<div class="column"> <div class="card"><h3>Card 1</h3><p>' + breeds[i] + '</p><p>Some text</p> </div></div>')        
-                $('.posts-container').append('<a href='+ toTitleCase(breeds[i]) + '><div class="single-post-container"><div class="dog-image"><img src="../static/images/dog.png" class="rounded-circle" alt="Cinque Terre"></div><div class="dog-name"><h1>' + toTitleCase(breeds[i]) + '</h1></div></div></a>')
+                $('.posts-container').append('<a href="chat/'+ delSpaces(breeds[i]) + '"><div class="single-post-container"><div class="dog-image"><img src="../static/images/dog.png" class="rounded-circle" alt="Cinque Terre"></div><div class="dog-name"><h1>' + toTitleCase(breeds[i]) + '</h1></div></div></a>')
             // TODO: 1. replace the current cards with the new one
             //       2. add photes of dogs
             }
@@ -22,6 +23,11 @@ function loadCards() {
         }
     });
     return breeds;
+}
+
+function delSpaces(text) {
+    text = text.toLowerCase().replace(' ', '_')
+    return text;
 }
 
 function toTitleCase(text) {
