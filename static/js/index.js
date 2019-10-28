@@ -20,21 +20,10 @@ $(function() {
     });
 
     $('#upload-file-btn').click(() => {
-        console.log($(".spinner"))
-        $(".spinner").append('<div class="spinner"> <center><div class="spinner-grow text-info"></div></center></div>');
-        $(".spinner").css({
-            "position": "absolut",
-            "background-color" : "rgba(255, 255, 255, 0.2)",
-            "width": "100%",
-            "height": "100",
-            "align-items": "center",
-            "z-index": "2000"
-        });
-        $(".spinner-grow").css({ "margin-top" : "20%" });
+
         let pic = $('#input_pic')[0].files[0]; 
         if (typeof pic !== 'undefined') {
             var form_data = new FormData($('#upload-file')[0]);
-            $('image_view').attr('src', $('#upload-file')[0])
             $.ajax({
                 type: 'POST',
                 url: '/upload',
@@ -43,11 +32,11 @@ $(function() {
                 datatype: false,
                 processData: false
             }).done(function(response) {
+                animateCSS('.prediction_div', 'heartBeat')
                 $("#image_view").css({
-                    "border-color": "#8A2BE2", 
-                    "border-width":"2px", 
-                    "border-style":"solid"});
-                    $("#image_view").attr("src", '/logo');
+                    "border-radius": "5px"
+                });
+                $("#image_view").attr("src", '/logo');
                 $('#result').text(response);
             }).fail(function(err){
                 alert('error:' + err);
@@ -79,3 +68,17 @@ $(function() {
         }
     });
 });
+
+function animateCSS(element, animationName, callback) {
+    const node = document.querySelector(element)
+    node.classList.add('animated', animationName)
+
+    function handleAnimationEnd() {
+        node.classList.remove('animated', animationName)
+        node.removeEventListener('animationend', handleAnimationEnd)
+
+        if (typeof callback === 'function') callback()
+    }
+
+    node.addEventListener('animationend', handleAnimationEnd)
+}
