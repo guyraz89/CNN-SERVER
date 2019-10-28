@@ -24,6 +24,8 @@ $(function() {
         let pic = $('#input_pic')[0].files[0]; 
         if (typeof pic !== 'undefined') {
             var form_data = new FormData($('#upload-file')[0]);
+            $('.prediction_div').css({'animation-iteration-count': 'infinite'})
+            animateCSS('.prediction_div', 'heartBeat')
             $.ajax({
                 type: 'POST',
                 url: '/upload',
@@ -32,7 +34,7 @@ $(function() {
                 datatype: false,
                 processData: false
             }).done(function(response) {
-                animateCSS('.prediction_div', 'heartBeat')
+                $('.prediction_div').css({'animation-iteration-count': 'unset'})
                 $("#image_view").css({
                     "border-radius": "5px"
                 });
