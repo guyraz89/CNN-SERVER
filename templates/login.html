@@ -6,16 +6,20 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
 </head>
 <body>
-    <div class="main-div">
-        <h3>Welcome</h3>
+    <div class="main-div row">
+        
+        <div class="row"><h1>Welcome</h1></div>
+        
         <input type="email" placeholder="Email" id="email_field"/>
         <input type="password" placeholder="Password" id="password_field"/>
         <div class="custom-file">
             <input id="input_pic" type="file" class="custom-file-input" name="file">
-            <label class="custom-file-label" for="file" style="text-align: left;">Let me guess</label>
         </div>
-        <button onclick="login()">Login</button>
-        <button onclick="register()">Register</button>
+        <div class="row ">
+            <button onclick="login()">Login</button>
+            <button onclick="register()">Register</button>
+        </div>
+        
     </div>
 
 
